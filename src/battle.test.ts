@@ -1,8 +1,8 @@
 import { Pokemon } from "./pokemon";
 import { Battle } from "./battle";
 
-describe('should return pokemon who has to start', function() {
-    it('whoHadToAttack', function() {
+describe('whoHadToAttack', function() {
+    it('should return pokemon who has to start', function() {
       const salameche = new Pokemon("Salamèche", 100, 40, 40, 40, 30);
       const carapuce = new Pokemon("Carapuce", 80, 30, 30, 30, 20);
       const battle = new Battle(salameche, carapuce);
@@ -11,50 +11,45 @@ describe('should return pokemon who has to start', function() {
     });
 })
 
-describe('should return pokemons with less hp', function() {
-    it('doAttackInOrder', function() {
-      const salameche = new Pokemon("Salamèche", 50, 40, 15, 40, 30);
-      const carapuce = new Pokemon("Carapuce", 40, 30, 10, 30, 20);
+describe('doAttackInOrder', function() {
+    it('should return pokemons with less hp', function() {
+      const baseHpSalameche = 50;
+      const baseHpCarapuce = 40;
+      const salameche = new Pokemon("Salamèche", baseHpSalameche, 40, 15, 40, 30);
+      const carapuce = new Pokemon("Carapuce", baseHpCarapuce, 30, 10, 30, 20);
       const battle = new Battle(salameche, carapuce);
 
-      const [salamecheAfterAttack, carapuceAfterAttack] = battle.doAttackInOrder(Object.assign({}, salameche), Object.assign({}, carapuce));
+      battle.doAttackInOrder(salameche, carapuce);
 
-      // console.log(`salameche hp : ${salameche.hp}      salamecheAfterAttack hp : ${salamecheAfterAttack.hp}`);
-      // console.log(`carapuce hp : ${carapuce.hp}      carapuceAfterAttack hp : ${carapuceAfterAttack.hp}`);
-
-      expect(salamecheAfterAttack.hp).toBe(48);
-      expect(carapuceAfterAttack.hp).toBe(37);
+      expect(baseHpSalameche > battle.pokemon0.hp).toBe(true);
+      expect(baseHpCarapuce > battle.pokemon1.hp).toBe(true);
     });
 })
 
-describe('should return pokemons with less hp', function() {
-    it('doAttackInOrder', function() {
-      const salameche = new Pokemon("Salamèche", 50, 40, 15, 40, 30);
-      const carapuce = new Pokemon("Carapuce", 40, 30, 10, 30, 20);
-      const battle = new Battle(Object.assign({}, salameche), Object.assign({}, carapuce));
+describe('doAttacks', function() {
+    it('should return pokemons with less hp', function() {
+      const baseHpSalameche = 50;
+      const baseHpCarapuce = 40;
+      const salameche = new Pokemon("Salamèche", baseHpSalameche, 40, 15, 40, 30);
+      const carapuce = new Pokemon("Carapuce", baseHpCarapuce, 30, 10, 30, 20);
+      const battle = new Battle(salameche, carapuce);
 
       battle.doAttacks();
 
-      // console.log(`salameche hp : ${salameche.hp}      battle.pokemon0 hp : ${salamecheAfterAttack.hp}`);
-      // console.log(`carapuce hp : ${carapuce.hp}      battle.pokemon1 hp : ${carapuceAfterAttack.hp}`);
-
-      expect(battle.pokemon0.hp).toBe(48);
-      expect(battle.pokemon1.hp).toBe(37);
+      expect(baseHpSalameche > battle.pokemon0.hp).toBe(true);
+      expect(baseHpCarapuce > battle.pokemon1.hp).toBe(true);
     });
 })
 
-describe('should have pokemon KO', function() {
-    it('fight', function() {
+describe('fight', function() {
+    it('should have pokemon KO', function() {
       const salameche = new Pokemon("Salamèche", 50, 40, 15, 40, 30);
       const carapuce = new Pokemon("Carapuce", 40, 30, 10, 30, 20);
       const battle = new Battle(salameche, carapuce);
 
       battle.fight();
 
-      // console.log(`salameche hp : ${salameche.hp}`);
-      // console.log(`carapuce hp : ${carapuce.hp}`);
-
-      expect(salameche.hp).toBe(24);
+      expect(salameche.hp > 0).toBe(true);
       expect(carapuce.hp).toBe(0);
     });
 })

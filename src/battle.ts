@@ -10,11 +10,11 @@ export class Battle {
         this.pokemon1 = pokemon1;
     }
 
-    getRandomInt(max) {
+    getRandomInt(max): number {
         return Math.floor(Math.random() * Math.floor(max));
       }
 
-    pokemonWhoHasToStart() {
+    pokemonWhoHasToStart(): Pokemon {
         if(this.pokemon0.speed === this.pokemon1.speed) {
             if(this.getRandomInt(2) === 0) {
                 return this.pokemon0;
@@ -25,7 +25,7 @@ export class Battle {
         return this.pokemon0.speed > this.pokemon1.speed ? this.pokemon0 : this.pokemon1;
     }
 
-    doAttackInOrder(firstAttacker: Pokemon, secondAttacker: Pokemon) {
+    doAttackInOrder(firstAttacker: Pokemon, secondAttacker: Pokemon): void {
         let damages0 = Math.floor(Math.floor(Math.floor(2 * firstAttacker.level / 5 + 2) * firstAttacker.attack / secondAttacker.defense) / 50) + 2;
         secondAttacker.hp -= damages0;
 
@@ -39,19 +39,17 @@ export class Battle {
                 firstAttacker.hp = 0;
             }
         }
-
-        return [ firstAttacker, secondAttacker ];
     }
 
-    doAttacks() {
+    doAttacks(): void {
         if(this.pokemonWhoHasToStart() === this.pokemon0) {
-            [this.pokemon0, this.pokemon1] = this.doAttackInOrder(this.pokemon0, this.pokemon1);
+            this.doAttackInOrder(this.pokemon0, this.pokemon1);
         } else if(this.pokemonWhoHasToStart() === this.pokemon0) {
-            [this.pokemon1, this.pokemon0] = this.doAttackInOrder(this.pokemon1, this.pokemon0);
+            this.doAttackInOrder(this.pokemon1, this.pokemon0);
         }
     }
 
-    fight() {
+    fight(): void {
         while(this.pokemon0.hp > 0 && this.pokemon1.hp > 0) {
             this.doAttacks();
         }
