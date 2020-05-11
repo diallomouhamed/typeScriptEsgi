@@ -10,9 +10,17 @@ export class Battle {
         this.pokemon1 = pokemon1;
     }
 
+    getRandomInt(max) {
+        return Math.floor(Math.random() * Math.floor(max));
+      }
+
     pokemonWhoHasToStart() {
         if(this.pokemon0.speed === this.pokemon1.speed) {
-            return this.pokemon0;
+            if(this.getRandomInt(2) === 0) {
+                return this.pokemon0;
+            } else {
+                return this.pokemon0;
+            }
         }
         return this.pokemon0.speed > this.pokemon1.speed ? this.pokemon0 : this.pokemon1;
     }
@@ -44,5 +52,8 @@ export class Battle {
     }
 
     fight() {
+        while(this.pokemon0.hp > 0 && this.pokemon1.hp > 0) {
+            this.doAttacks();
+        }
     }
 }

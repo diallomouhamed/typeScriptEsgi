@@ -42,3 +42,19 @@ describe('should return pokemons with less hp', function() {
       expect(battle.pokemon1.hp).toBe(37);
     });
 })
+
+describe('should have pokemon KO', function() {
+    it('fight', function() {
+      const salameche = new Pokemon("Salamèche", 50, 40, 15, 40, 30);
+      const carapuce = new Pokemon("Carapuce", 40, 30, 10, 30, 20);
+      const battle = new Battle(salameche, carapuce);
+
+      battle.fight();
+
+      // console.log(`salameche hp : ${salameche.hp}`);
+      // console.log(`carapuce hp : ${carapuce.hp}`);
+
+      expect(salameche.hp).toBe(24);
+      expect(carapuce.hp).toBe(0);
+    });
+})
